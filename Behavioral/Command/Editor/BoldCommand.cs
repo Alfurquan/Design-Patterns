@@ -1,0 +1,34 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DesignPatterns.Behavioral.Command.Editor
+{
+    public class BoldCommand : IUndoableCommand
+    {
+        private string prevContent;
+        private HtmlDocument document;
+        private History history;
+
+        public BoldCommand(HtmlDocument document, History history)
+        {
+            this.document = document;
+            this.history = history;
+        }
+
+     
+        public void Execute()
+        {
+            this.prevContent = document.Content;
+            document.MakeBold();
+            history.Push(this);
+        }
+
+        public void Unexecute()
+        {
+           document.Content = prevContent;
+        }
+    }
+}
